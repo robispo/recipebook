@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Recipe } from '../recipe.model';
+import { RecipeService } from 'src/app/Services/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -8,31 +9,11 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-  recipes: Recipe[] = [
-    new Recipe(
-      'Pasta',
-      'Pasta con tomate.',
-      'https://images.media-allrecipes.com/images/56589.png'
-    ),
-    new Recipe(
-      'Pasta 2',
-      'Pasta con tomate. 3',
-      'https://images.media-allrecipes.com/images/56589.png'
-    ),
-    new Recipe(
-      'Pasta 3',
-      'Pasta con tomate. 3',
-      'https://images.media-allrecipes.com/images/56589.png'
-    )
-  ];
-  @Output()
-  showRecipe = new EventEmitter<Recipe>();
+  recipes: Recipe[];
 
-  constructor() {}
+  constructor(private recService: RecipeService) {}
 
-  ngOnInit() {}
-
-  recipeSelected(recipe: Recipe) {
-    this.showRecipe.emit(recipe);
+  ngOnInit() {
+    this.recipes = this.recService.getRecipes();
   }
 }
