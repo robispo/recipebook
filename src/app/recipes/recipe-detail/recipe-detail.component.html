@@ -17,20 +17,20 @@
       <ul class="dropdown-menu">
         <li><a (click)="onAddToShoppinList()">To Shopping List</a></li>
         <li><a [routerLink]="['edit']" >Edit Recipe</a></li>
-        <li><a>Delete Recipe</a></li>
+        <li><a (click)="onDeleteRecipe()">Delete Recipe</a></li>
       </ul>
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    {{recipe.descriptipon}}
+    {{recipe.description}}
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let ing of recipe.ingridients">
+      <li class="list-group-item" *ngFor="let ing of recipe.ingredients">
         {{ing.name}} - {{ing.amount}}
       </li>
     </ul>
