@@ -7,6 +7,7 @@ import { RecipeSelectComponent } from './recipes/recipe-select/recipe-select.com
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { SinginComponent } from './auth/singin/singin.component';
 import { SingupComponent } from './auth/singup/singup.component';
+import { AuthGuard } from './Services/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch: 'full' },
@@ -18,7 +19,8 @@ const appRoutes: Routes = [
       { path: 'new', component: RecipeEditComponent },
       { path: ':id', component: RecipeDetailComponent },
       { path: ':id/edit', component: RecipeEditComponent }
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   { path: 'shoppinglist', component: ShoppingListComponent },
   { path: 'singin', component: SinginComponent },

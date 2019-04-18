@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,6 +18,7 @@ import { RecipeSelectComponent } from './recipes/recipe-select/recipe-select.com
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { SinginComponent } from './auth/singin/singin.component';
 import { SingupComponent } from './auth/singup/singup.component';
+import { AuthInterceptor } from './Services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { SingupComponent } from './auth/singup/singup.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, multi: true, useClass: AuthInterceptor }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
