@@ -32,6 +32,10 @@ export class RecipeService {
   ];
   recipesChange = new Subject<Recipe[]>();
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipeChanged();
+  }
   getRecipes() {
     return this.recipes.slice();
   }
@@ -70,7 +74,7 @@ export class RecipeService {
     this.recipeChanged();
   }
 
-  recipeChanged() {
+  private recipeChanged() {
     this.recipesChange.next(this.getRecipes());
   }
 }
