@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { DataStorageService } from '../Services/data-storage.service';
-import { RecipeService } from '../Services/recipe.service';
-import { Recipe } from '../recipes/recipe.model';
-import { AuthService } from '../Services/auth.service';
+import { DataStorageService } from '../../Services/data-storage.service';
+import { RecipeService } from '../../Services/recipe.service';
+import { Recipe } from '../../recipes/recipe.model';
+import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -5,6 +5,7 @@ import 'firebase/auth';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   token: string;
+
   constructor() {}
 
   singUp(email: string, password: string) {
@@ -34,6 +35,10 @@ export class AuthService {
       .catch(e => (this.token = null));
 
     return this.token;
+  }
+
+  setToken(token: string) {
+    this.token = token;
   }
 
   isAuthenticated() {
