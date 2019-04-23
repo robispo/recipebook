@@ -10,7 +10,7 @@
                         List</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <ng-template [ngIf]="isAuthenticated()">
+                <ng-template [ngIf]="!isAuthenticated()">
                     <li><a routerLink="/singin">Singin</a></li>
                     <li><a routerLink="/singup">Register</a></li>
                 </ng-template>
