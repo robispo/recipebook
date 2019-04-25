@@ -1,7 +1,9 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { Ingredient } from '../shared/ingredient.model';
-import { Subject } from 'rxjs';
+import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +16,9 @@ export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   ingredientEdit = new Subject<number>();
 
-  getIngredients() {
-    return this.ingredients.slice();
-  }
+  constructor(
+    private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>
+  ) {}
 
   getIngredient(index: number) {
     return this.ingredients[index];
@@ -24,23 +26,6 @@ export class ShoppingListService {
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
-    this.ingredientsChanged.next(this.ingredients.slice());
-  }
-
-  addIngredients(ingredients: Ingredient[]) {
-    if (!ingredients) {
-      return;
-    }
-
-    ingredients.forEach(i => {
-      const index = this.ingredients.findIndex(ii => ii.name === i.name);
-      if (index >= 0) {
-        this.ingredients[index].amount += i.amount;
-      } else {
-        this.ingredients.push(i);
-      }
-    });
-
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 

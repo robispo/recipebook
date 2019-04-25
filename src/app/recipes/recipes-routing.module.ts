@@ -12,7 +12,6 @@ const recipesRoutes: Routes = [
   {
     path: '',
     component: RecipesComponent,
-    pathMatch: 'full',
     children: [
       { path: '', component: RecipeSelectComponent, pathMatch: 'full' },
       { path: 'new', component: RecipeEditComponent },
