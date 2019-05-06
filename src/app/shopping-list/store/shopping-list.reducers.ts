@@ -2,8 +2,20 @@ import { Ingredient } from '../../shared/ingredient.model';
 import * as ShoppingListActions from './shopping-list.actions';
 import { Action } from '@ngrx/store';
 
-const initialState = {
-  ingredients: [new Ingredient('Apples', 5), new Ingredient('Tomatos', 4)]
+export interface AppState {
+  shoppingList: State;
+}
+
+export interface State {
+  ingredients: Ingredient[];
+  editedIngredient: Ingredient;
+  editedIngredientIndex: number;
+}
+
+const initialState: State = {
+  ingredients: [new Ingredient('Apples', 5), new Ingredient('Tomatos', 4)],
+  editedIngredient: null,
+  editedIngredientIndex: -1
 };
 export function shoppingListReducer(state = initialState, action: Action) {
   switch (action.type) {
@@ -26,22 +38,39 @@ export function shoppingListReducer(state = initialState, action: Action) {
     case ShoppingListActions.UPDATE_INGREDIENT:
       const data = action as ShoppingListActions.UpdateIngredient;
       const ingredients = state.ingredients;
-      ingredients[data.payload.index] = data.payload.ingredient;
+      ingredients[state.editedIngredientIndex] = data.payload.ingredient;
 
       return {
         ...state,
-        ingredients: [...ingredients]
+        ingredients: [...ingredients],
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
     case ShoppingListActions.DELETE_INGREDIENT:
-      const index = (action as ShoppingListActions.DeleteIngredient).payload;
-
       const ings = state.ingredients.filter((v, i, a) => {
-        return i !== index;
+        return i !== state.editedIngredientIndex;
       });
 
       return {
         ...state,
-        ingredients: ings
+        ingredients: ings,
+        editedIngredient: null,
+        editedIngredientIndex: -1
+      };
+    case ShoppingListActions.START_EDIT:
+      const eIndex = (action as ShoppingListActions.StartEdit).payload;
+      const eIng = { ...state.ingredients[eIndex] };
+
+      return {
+        ...state,
+        editedIngredient: eIng,
+        editedIngredientIndex: eIndex
+      };
+      case ShoppingListActions.STOP_EDIT:
+      return {
+        ...state,
+        editedIngredient: null,
+        editedIngredientIndex: -1
       };
     default:
       return state;
